@@ -1,0 +1,37 @@
+﻿
+@model List<BusinessLogic.User>
+    @{
+        ViewBag.Title = "View";
+    }
+
+    <h2>User View</h2>
+
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>Description</th>
+
+        </tr>
+
+        @{
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.City</td>
+                    <td>@user.Street</td>
+                    <td>@user.Description</td>
+
+                </tr>
+            }
+        }
+    </table>
+    <div>
+        @Html.ActionLink("Add user", "Add", "User")
+    </div>
