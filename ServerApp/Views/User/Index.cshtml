@@ -15,22 +15,24 @@
             <th>Street</th>
             <th>Description</th>
             <th>Edit</th>
+            <th>Details</th>
 
         </tr>
 
         @{
             foreach (var user in Model)
             {
-                <tr>
-                    <td>@user.Id</td>
-                    <td>@user.UserName</td>
-                    <td>@user.Email</td>
-                    <td>@user.City</td>
-                    <td>@user.Street</td>
-                    <td>@user.Description</td>
-                    <td>@Html.ActionLink("Go", "Edit", "User", new { id = user.Id }, null)</td>
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.City</td>
+            <td>@user.Street</td>
+            <td>@user.Description</td>
+            <td>@Html.ActionLink("Edit", "Edit", "User", new { id = user.Id }, null)</td>
+            <td>@Html.ActionLink("Go", "Details", "User", new { id = user.Id }, null)</td> <!--in view-ul de details vreau sa fac Delete-->
 
-                </tr>
+        </tr>
             }
         }
     </table>
