@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -81,6 +82,61 @@ namespace ServerApp.Controllers
             var model = Users.FirstOrDefault(x => x.Id == id);
 
             return View("Add", model);
+        }
+
+        // GET: PersonalDetails/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var generalList = users.GetAll();
+            List<UserDeleteViewModel> UsersList = new List<UserDeleteViewModel>();
+
+            foreach (var element in generalList)
+            {
+                UserDeleteViewModel ModelUser = new UserDeleteViewModel();
+                ModelUser.City = element.City;
+                ModelUser.Description = element.Description;
+                ModelUser.Email = element.Email;
+                ModelUser.Street = element.Street;
+                ModelUser.UserName = element.UserName;
+                UsersList.Add(ModelUser);
+
+            }
+            UserDeleteViewModel personalDetail= UsersList.FirstOrDefault(x => x.Id == id);
+
+            if (personalDetail == null)
+            {
+                return HttpNotFound();
+            }
+            return View(personalDetail);
+        }
+
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var generalList = users.GetAll();
+            List<UserDeleteViewModel> UsersList = new List<UserDeleteViewModel>();
+
+            foreach (var element in generalList)
+            {
+                UserDeleteViewModel ModelUser = new UserDeleteViewModel();
+                ModelUser.City = element.City;
+                ModelUser.Description = element.Description;
+                ModelUser.Email = element.Email;
+                ModelUser.Street = element.Street;
+                ModelUser.UserName = element.UserName;
+                UsersList.Add(ModelUser);
+
+            }
+            UserDeleteViewModel personalDetail = UsersList.FirstOrDefault(x => x.Id == id);
+            UsersList.Remove(personalDetail);
+            
+            return RedirectToAction("Index");
         }
     }
 }
