@@ -1,4 +1,4 @@
-﻿@model BusinessLogic.User
+﻿@model ServerApp.Models.UserAddViewModel
 @{
     ViewBag.Title = "Add";
 }
@@ -38,7 +38,7 @@
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
 
-        @Html.HiddenFor(x => x.Id);
+       
 
         <input type="submit" />
     }
