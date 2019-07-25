@@ -10,16 +10,43 @@ using System.Threading.Tasks;
 namespace Data
 {
     public class UserRepository:IUserRepository
-    {
-        public void AddUser(User user)
+    {  
+        public void DeleteUser(User user)
         {
-            string connectionString = "Data Source=.; Initial Catalog=w14;Integrated Security=True;";
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            SqlCommand comanda = new SqlCommand();
-            comanda.Connection = connection;
             try
             {
+                string connectionString = "Data Source=.; Initial Catalog=w14;Integrated Security=True;";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand comanda = new SqlCommand();
+                comanda.Connection = connection;
+
+                comanda.CommandText = "DELETE from USERS Where ID=@Id";
+                SqlParameter parameterUserN = new SqlParameter("@Id", System.Data.DbType.String);
+                parameterUserN.Value = user.Id;
+
+                comanda.ExecuteScalar();
+
+                connection.Close();
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void AddUser(User user)
+        {
+           
+            try
+            {
+                string connectionString = "Data Source=.; Initial Catalog=w14;Integrated Security=True;";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand comanda = new SqlCommand();
+                comanda.Connection = connection;
+
                 comanda.CommandText = "Insert into USERS values (@Username,@Email,@City,@Description,@Street)";
                 SqlParameter parameterUserN = new SqlParameter("@Username", System.Data.DbType.String);
                 parameterUserN.Value = user.UserName;
@@ -42,19 +69,22 @@ namespace Data
                 comanda.Parameters.Add(parameterDesc);
                 comanda.Parameters.Add(parameterStreet);
                 var returned = comanda.ExecuteScalar();
+
+                connection.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
+                
 
         public List<User> GetAll()
         {
             string connectionString = "Data Source=.; Initial Catalog=w14;Integrated Security=True;";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-            Console.WriteLine(connection.State);
+            
 
             SqlCommand command = new SqlCommand();
             command.Connection = connection;

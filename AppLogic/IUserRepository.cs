@@ -6,5 +6,6 @@ namespace BusinessLogic
     {
        List<User> GetAll();
         void AddUser(User user);
+        void DeleteUser(User user);
     }
 }
